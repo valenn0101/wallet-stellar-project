@@ -11,6 +11,15 @@ export default defineConfig({
       { find: '@/Components', replacement: '/src/Components' },
     ],
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        secure: false,
+        rewrite: path => path.replace(/^\/api/, ""),
+      },
+    },
+  },
   optimizeDeps: {
     esbuildOptions: {
         // Node.js global to browser globalThis

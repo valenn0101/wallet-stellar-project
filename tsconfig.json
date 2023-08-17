@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "types": ["vite/client", "node", "jest", "@testing-library/jest-dom"],
     "baseUrl": ".",
     "paths": {
@@ -23,5 +23,5 @@
     },
     "noImplicitAny": true
   },
-  "include": ["src", "jest.setup.ts", "vite.config.ts"]
+  "include": ["src/**/*.ts", "cypress/**/*.ts", "cypress.config.ts"]
 }
