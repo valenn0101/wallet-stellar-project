@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
+import WarningModal from '../WarningModal';
+import { ALERT_MESSAGES } from '../../utils/constants';
+
 type Keypair = {
   secretKey: string | null;
   publicKey: string | null;
@@ -9,8 +12,16 @@ type Keypair = {
   setPublicKey: (publicKey: string | null) => void;
 };
 function SafetyAlert({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): React.ReactElement {
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const backHome = () => {
     setSecret(null);
     setPublicKey(null);
@@ -41,8 +52,15 @@ function SafetyAlert({ secretKey, publicKey, setSecret, setPublicKey }: Keypair)
           {" "}
           Back Home{" "}
         </Button>
-        <Button variant="warning"> Continue </Button>
+        <Button variant="warning" onClick={openModal}> Continue </Button>
       </div>
+
+      <WarningModal
+        show={showModal}
+        message={ALERT_MESSAGES.copyYourKeys}
+        tittleMessage={ALERT_MESSAGES.alert}
+        onClose={closeModal}
+      />
     </>
   );
 }
