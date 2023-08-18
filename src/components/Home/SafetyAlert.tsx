@@ -30,6 +30,9 @@ function SafetyAlert({ secretKey, setSecret, setPublicKey }: Keypair): React.Rea
       type: "SIGN_OUT",
     });
   };
+  const handleContinue = () => {
+    window.location.href = "/wallet";
+  }
   return (
     <>
       <h3 className="auth-form-title safety-alert-title">
@@ -72,6 +75,7 @@ function SafetyAlert({ secretKey, setSecret, setPublicKey }: Keypair): React.Rea
         message={ALERT_MESSAGES.copyYourKeys}
         tittleMessage={ALERT_MESSAGES.alert}
         onClose={closeModal}
+        onContinue = {handleContinue}
       />
     </>
   );
