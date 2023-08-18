@@ -10,6 +10,8 @@ function HomePage() {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const session = useSelector(state => state.session);
 
+  console.log(publicKey, secret);
+
   return (
     <div className="auth-form-container">
       <div className="auth-form">
@@ -18,7 +20,7 @@ function HomePage() {
             <SafetyAlert secretKey={secret} publicKey={publicKey} />
           ) : (
             <div>
-              <Login secretKey={secret} publicKey={publicKey} />
+              <Login secretKey={secret} publicKey={publicKey} setSecret={setSecret} setPublicKey={setPublicKey} />
               <Register setSecret={setSecret} setPublicKey={setPublicKey} />
             </div>
           )}
