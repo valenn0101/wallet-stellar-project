@@ -5,11 +5,15 @@ import { useDispatch } from "react-redux";
 type Keypair = {
   secretKey: string | null;
   publicKey: string | null;
+  setSecret: (secret: string | null) => void;
+  setPublicKey: (publicKey: string | null) => void;
 };
-function SafetyAlert({ secretKey, publicKey }: Keypair): React.ReactElement {
+function SafetyAlert({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): React.ReactElement {
   const dispatch = useDispatch();
 
   const backHome = () => {
+    setSecret(null);
+    setPublicKey(null);
     dispatch({
       type: "SIGN_OUT",
     });
