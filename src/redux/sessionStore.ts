@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import { CUSTOM_TOAST_STYLE, TOAST_ALERT_MESSAGE } from "../utils/constants";
 
 const initialState = {
-  publicKey: "",
+  publicKey: false,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -12,6 +14,15 @@ const rootReducer = (state = initialState, action: any) => {
         publicKey: action.payload.publicKey,
       };
     case "SIGN_OUT":
+    toast.info(TOAST_ALERT_MESSAGE.signOut, {
+        style: {
+            background: CUSTOM_TOAST_STYLE.alertBackground,
+            color: CUSTOM_TOAST_STYLE.fontColor,
+        },
+        progressStyle: {
+            background: CUSTOM_TOAST_STYLE.progressBackground,
+        },
+        });
       return initialState;
     default:
       return state;
