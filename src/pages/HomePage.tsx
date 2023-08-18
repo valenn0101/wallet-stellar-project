@@ -10,6 +10,8 @@ function HomePage() {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const session = useSelector(state => state.session);
 
+  console.log(publicKey, secret);
+
   return (
     <div className="auth-form-container">
       <div className="auth-form">
