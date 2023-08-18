@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import WarningModal from '../WarningModal';
 import { ALERT_MESSAGES } from '../../utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 type Keypair = {
   secretKey: string | null;
@@ -15,6 +16,7 @@ function SafetyAlert({ secretKey, setSecret, setPublicKey }: Keypair): React.Rea
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const publicKey = useSelector(state => state.publicKey);
+  const navigate = useNavigate();
 
   const openModal = () => {
     setShowModal(true);
@@ -31,7 +33,7 @@ function SafetyAlert({ secretKey, setSecret, setPublicKey }: Keypair): React.Rea
     });
   };
   const handleContinue = () => {
-    window.location.href = "/wallet";
+    navigate('/wallet');
   }
   return (
     <>
