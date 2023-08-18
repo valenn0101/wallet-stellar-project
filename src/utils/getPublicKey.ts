@@ -2,7 +2,7 @@ import { Keypair, Server } from "stellar-sdk";
 
 import { TESTNET_HORIZON_URL } from "./constants";
 
-export async function getPublicKey(secretKey: string): Promise<string | any> {
+async function getPublicKey(secretKey: string): Promise<string | any> {
   try {
     const keypair = Keypair.fromSecret(secretKey);
 
@@ -14,3 +14,5 @@ export async function getPublicKey(secretKey: string): Promise<string | any> {
     return error;
   }
 }
+
+export default getPublicKey
