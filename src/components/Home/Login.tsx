@@ -38,6 +38,12 @@ function Login({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): Reac
       const publicKeyResult = await getPublicKey(importSecretKey);
       if (typeof publicKeyResult === "string") {
         setPublicKey(publicKeyResult);
+        dispatch({
+          type: "SIGN_IN",
+          payload: {
+            publicKey: publicKeyResult,
+          },
+        })
       } else {
         const errorMessage =
           publicKeyResult.message + ": " + TOAST_ALERT_MESSAGE.notFoundAccount;
@@ -63,12 +69,6 @@ function Login({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): Reac
       return;
     }
     resetToastState();
-    dispatch({
-      type: "SIGN_IN",
-      payload: {
-        publicKey,
-      },
-    });
   };
   return (
     <>
