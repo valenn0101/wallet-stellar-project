@@ -19,3 +19,5 @@ export const CUSTOM_TOAST_STYLE = {
   fontColor: 'white',
   progressBackground: 'white',
 };
+
+export const TESTNET_HORIZON_URL = "https://horizon-testnet.stellar.org";

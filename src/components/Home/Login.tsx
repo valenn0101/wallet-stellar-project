@@ -1,17 +1,22 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { Button, Toast } from 'react-bootstrap';
+import { useDispatch } from "react-redux";
 
-import { ERROR_MESSAGES } from '../../utils/constants';
+import { ERROR_MESSAGES, TOAST_ALERT_MESSAGE } from '../../utils/constants';
+import  getPublicKey  from '../../utils/getPublicKey';
 
 type Keypair = {
   secretKey: string | null;
   publicKey: string | null;
+  setSecret: (secret: string | null) => void;
+  setPublicKey: (publicKey: string | null) => void;
 };
 
-function Login({ secretKey, publicKey }: Keypair): React.ReactElement {
+function Login({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): React.ReactElement {
   const [importSecretKey, setImportSecretKey] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (secretKey) {
@@ -26,24 +31,44 @@ function Login({ secretKey, publicKey }: Keypair): React.ReactElement {
     setShowToast(false);
   };
 
-  const importAccount = () => {
+  const importAccount = async () => {
     const requiredSecretKeyLength = 56;
-
-    if (importSecretKey.length === requiredSecretKeyLength && importSecretKey.startsWith('S')) {
-      resetToastState();
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      let errorMessage = ERROR_MESSAGES.invalidKey;
-
-      if (importSecretKey.length !== requiredSecretKeyLength) {
-        errorMessage = ERROR_MESSAGES.invalidLength;
-      } else if (!importSecretKey.startsWith('S')) {
-        errorMessage = ERROR_MESSAGES.invalidStart;
+    if (!publicKey) {
+      setSecret(importSecretKey);
+      const publicKeyResult = await getPublicKey(importSecretKey);
+      if (typeof publicKeyResult === "string") {
+        setPublicKey(publicKeyResult);
+      } else {
+        const errorMessage =
+          publicKeyResult.message + ": " + TOAST_ALERT_MESSAGE.notFoundAccount;
+        setShowToast(true);
+        setErrorMessage(errorMessage);
+        setPublicKey(null);
+        setSecret(null);
+        return;
       }
+    }
+
+    if (
+      importSecretKey.length !== requiredSecretKeyLength ||
+      !importSecretKey.startsWith("S")
+    ) {
+      const errorMessage =
+        importSecretKey.length !== requiredSecretKeyLength
+          ? ERROR_MESSAGES.invalidLength
+          : ERROR_MESSAGES.invalidStart;
 
       setShowToast(true);
       setErrorMessage(errorMessage);
+      return;
     }
+    resetToastState();
+    dispatch({
+      type: "SIGN_IN",
+      payload: {
+        publicKey,
+      },
+    });
   };
   return (
     <>
