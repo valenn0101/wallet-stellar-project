@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 import { CUSTOM_TOAST_STYLE, TOAST_ALERT_MESSAGE } from "../utils/constants";
 
 const initialState = {
-  publicKey: false,
+  publicKey: null,
+  session: false,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -12,6 +13,7 @@ const rootReducer = (state = initialState, action: any) => {
       return {
         ...state,
         publicKey: action.payload.publicKey,
+        session: true
       };
     case "SIGN_OUT":
     toast.info(TOAST_ALERT_MESSAGE.signOut, {
