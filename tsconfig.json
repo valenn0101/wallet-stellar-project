@@ -23,5 +23,5 @@
     },
     "noImplicitAny": true
   },
-  "include": ["src/**/*.ts", "cypress/**/*.ts", "cypress.config.ts"]
+  "include": ["src/**/*.ts", "cypress/**/*.ts", "cypress/**/*.tsx", "cypress.config.ts"]
 }
