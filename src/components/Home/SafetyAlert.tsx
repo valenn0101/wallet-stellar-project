@@ -3,8 +3,8 @@ import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
 type Keypair = {
-  secretKey: string;
-  publicKey: string;
+  secretKey: string | null;
+  publicKey: string | null;
 };
 function SafetyAlert({ secretKey, publicKey }: Keypair): React.ReactElement {
   const dispatch = useDispatch();
