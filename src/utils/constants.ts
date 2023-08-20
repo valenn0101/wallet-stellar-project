@@ -12,6 +12,7 @@ export const TOAST_ALERT_MESSAGE = {
 export const ALERT_MESSAGES = {
   alert: 'Please wait a moment! 🛑🛑',
   copyYourKeys: 'Please copy your keys!',
+  notSession: 'Please sign in to continue',
 };
 
 export const CUSTOM_TOAST_STYLE = {
