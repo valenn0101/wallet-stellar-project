@@ -3,8 +3,10 @@ import { Server } from 'stellar-sdk';
 
 import { TESTNET_HORIZON_URL } from '../utils/constants';
 
-const useBalance = ({publicKey}) => {
-    const [balance, setBalance] = useState<string | undefined>(undefined);
+type BalanceResult = string | Error;
+
+const useBalance = ({ publicKey }): BalanceResult => {
+    const [balance, setBalance] = useState<BalanceResult>(undefined);
     const server = new Server(TESTNET_HORIZON_URL);
 
     useEffect(() => {
@@ -14,7 +16,7 @@ const useBalance = ({publicKey}) => {
                 const accountBalance = account.balances[0]?.balance;
                 setBalance(accountBalance);
             } catch (error) {
-                setBalance( undefined + error);
+                setBalance(new Error(error.message));
             }
         };
 
