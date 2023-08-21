@@ -19,7 +19,7 @@ function Balance(publicKey) {
                 <img src={xlmLogo} alt="XLM Logo" width="30" height="30" className="ml-2" />
               </>
             ) : (
-              <ChargeAccount />
+              <ChargeAccount publicKey={publicKey}/>
             )}
           </div>
         </Col>
