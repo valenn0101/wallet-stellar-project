@@ -3,6 +3,8 @@ import React from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
+import Balance from "../components/Wallet/Balance/Balance";
+
 
 function HomeWallet(): React.ReactElement {
   const publicKey = useSelector((state) => state.publicKey);
@@ -17,12 +19,7 @@ function HomeWallet(): React.ReactElement {
           </Col>
         </Row>
         <hr />
-        <Row>
-          <Col>
-            <h3 className="text-primary">Account balance</h3>
-            <p>.....</p>
-          </Col>
-        </Row>
+          <Balance publicKey={publicKey} />
         <hr />
         <Row>
           <Col>
