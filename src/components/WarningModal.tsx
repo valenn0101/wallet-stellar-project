@@ -31,7 +31,7 @@ function WarningModal(props: WarningModalProps): React.ReactElement {
         <Button variant="secondary" className="button" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" className="button" onClick={onContinue}>
+        <Button variant="primary" className="button button-wallet" onClick={onContinue}>
           Continue
         </Button>
       </Modal.Footer>

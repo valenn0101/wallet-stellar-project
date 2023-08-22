@@ -25,7 +25,7 @@ function HomeWallet(): React.ReactElement {
         <Row>
           <Col>
             <h3 className="text-primary">Public key</h3>
-            <Alert variant="warning">{publicKey}</Alert>
+            <Alert variant="warning public-key">{publicKey}</Alert>
           </Col>
         </Row>
         <hr />

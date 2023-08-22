@@ -28,12 +28,12 @@ function ChargeAccount({ publicKey }) {
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Body>
-        <Card.Title>Oh oh, you don't have any XLM</Card.Title>
+        <Card.Title className='title-warning'>Oh oh, you don't have any XLM</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">But we can help you!</Card.Subtitle>
-        <Card.Text>
+        <Card.Text className='info'>
           The Stellar network allows you to fund your account on the test network.
         </Card.Text>
-        <Button onClick={handleChargeClick} variant='success'>
+        <Button onClick={handleChargeClick} variant='success' className='charge-btn'>
           Charge
         </Button>
         <Toast show={showToast} onClose={() => setShowToast(false)} delay={3000} autohide         style={{
@@ -44,7 +44,7 @@ function ChargeAccount({ publicKey }) {
           minWidth: '250px',
           backgroundColor: 'green',
         }}>
-          <Toast.Body>
+          <Toast.Body className='toast-alert'>
             {errorMessage}
           </Toast.Body>
         </Toast>
