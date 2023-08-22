@@ -50,7 +50,7 @@ function HomeWallet(): React.ReactElement {
         <hr />
         <Row>
           <Col>
-            <Button variant="danger" className="btn-block" onClick={backHome}>
+            <Button variant="danger" className="btn-block sign-out" onClick={backHome}>
               Sign out
             </Button>
           </Col>
