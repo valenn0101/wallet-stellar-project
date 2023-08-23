@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 import Balance from "../components/Wallet/Balance/Balance";
+import Send from "../components/Wallet/Send/Send";
 
 
 function HomeWallet(): React.ReactElement {
@@ -31,22 +32,7 @@ function HomeWallet(): React.ReactElement {
         <hr />
           <Balance publicKey={publicKey} />
         <hr />
-        <Row>
-          <Col>
-            <h3 className="text-primary">Send your money</h3>
-            <Form>
-              <div className="input-group">
-                <Form.Control type="number" placeholder="Enter amount" />
-                <div className="input-group-append">
-                  <span className="input-group-text">XLM</span>
-                </div>
-              </div>
-              <Button variant="success" className="btn-block mt-3">
-                Send
-              </Button>
-            </Form>
-          </Col>
-        </Row>
+          <Send />
         <hr />
         <Row>
           <Col>
