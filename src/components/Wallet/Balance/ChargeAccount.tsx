@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, Button, Toast} from 'react-bootstrap';
 
 import activeTestAccount from '../../../utils/activeTestAccount';
-import { ALERT_MESSAGES, ERROR_MESSAGES, DELAY_IN_MILLISECONDS } from '../../../utils/constants';
+import { ALERT_MESSAGES, ERROR_MESSAGES, DELAY_IN_MILISECONDS } from '../../../utils/constants';
 
 function ChargeAccount({ publicKey }) {
   const [showToast, setShowToast] = useState(false);
@@ -24,7 +24,7 @@ const showNotification = (message) => {
   setShowToast(true);
   setTimeout(() => {
     setShowToast(false);
-  }, DELAY_IN_MILLISECONDS);
+  }, DELAY_IN_MILISECONDS.DELAY_FOR_TOAST);
 };
 
   return (

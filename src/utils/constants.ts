@@ -27,4 +27,9 @@ export const DELAY_IN_MILLISECONDS = 6000;
 
 export const DELAY_FOR_INACTIVITY_RESET = 180000;
 
+export const DELAY_IN_MILISECONDS = {
+  DELAY_FOR_TOAST: 6000,
+  DELAY_FOR_INACTIVITY_RESET: 180000,
+}
+
 export const TESTNET_HORIZON_URL = "https://horizon-testnet.stellar.org";
