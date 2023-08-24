@@ -25,4 +25,6 @@ export const CUSTOM_TOAST_STYLE = {
 
 export const DELAY_IN_MILLISECONDS = 6000;
 
+export const DELAY_FOR_INACTIVITY_RESET = 180000;
+
 export const TESTNET_HORIZON_URL = "https://horizon-testnet.stellar.org";
