@@ -23,4 +23,6 @@ export const CUSTOM_TOAST_STYLE = {
   progressBackground: 'white',
 };
 
+export const DELAY_IN_MILLISECONDS = 6000;
+
 export const TESTNET_HORIZON_URL = "https://horizon-testnet.stellar.org";
