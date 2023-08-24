@@ -3,6 +3,7 @@ export const ERROR_MESSAGES = {
   invalidLength: 'Secret key must be 56 characters long.',
   invalidStart: "Secret key must start with 'S'.",
   invalidCharge: 'Invalid charge.',
+  notNetwork: 'Network response was not ok.',
 };
 
 export const TOAST_ALERT_MESSAGE = {
@@ -22,10 +23,6 @@ export const CUSTOM_TOAST_STYLE = {
   fontColor: 'white',
   progressBackground: 'white',
 };
-
-export const DELAY_IN_MILLISECONDS = 6000;
-
-export const DELAY_FOR_INACTIVITY_RESET = 180000;
 
 export const DELAY_IN_MILISECONDS = {
   DELAY_FOR_TOAST: 6000,

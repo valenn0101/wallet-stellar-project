@@ -1,3 +1,5 @@
+import { ERROR_MESSAGES } from "./constants";
+
 interface Key {
   publicKey: string;
 }
@@ -8,11 +10,10 @@ async function activeTestAccount({ publicKey }: Key) {
     const response = await fetch(`${friendbotUrl}?addr=${publicKey}`);
     
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error(ERROR_MESSAGES.notNetwork);
     }
     
-    const responseJSON = await response.json();
-    return responseJSON;
+    return await response.json
   } catch (error) {
     throw error;
   }
