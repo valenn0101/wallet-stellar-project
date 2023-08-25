@@ -1,3 +1,5 @@
+import { DELAY_IN_MILISECONDS } from "@/utils/constants";
+
 describe('Sign Out', () => {
   const projectUrl = Cypress.env('LOCALHOST_URL');
   beforeEach(() => {
@@ -9,7 +11,7 @@ describe('Sign Out', () => {
   });
 
   it("Should log out after 3 minutes of inactivity", () => {
-    cy.tick(190000);
+    cy.tick(DELAY_IN_MILISECONDS.DELAY_FOR_INACTIVITY_TESTING);
     cy.get("@authFormTitle")
   });
 
