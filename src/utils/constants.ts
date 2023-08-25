@@ -24,7 +24,7 @@ export const CUSTOM_TOAST_STYLE = {
   progressBackground: 'white',
 };
 
-export const DELAY_IN_MILISECONDS = {
+export const DELAY_IN_MILLISECONDS = {
   DELAY_FOR_TOAST: 6000,
   DELAY_FOR_INACTIVITY_RESET: 180000,
   DELAY_FOR_INACTIVITY_TESTING: 190000,

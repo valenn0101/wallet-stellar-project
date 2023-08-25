@@ -5,7 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { toast } from "react-toastify";
 
 import  setupInactivityReset from "../utils/inactivityReset";
-import { CUSTOM_TOAST_STYLE, DELAY_IN_MILISECONDS, TOAST_ALERT_MESSAGE } from "../utils/constants";
+import { CUSTOM_TOAST_STYLE, DELAY_IN_MILLISECONDS, TOAST_ALERT_MESSAGE } from "../utils/constants";
 
 const initialState = {
   publicKey: null,
@@ -51,6 +51,6 @@ const sessionStore: ToolkitStore = configureStore({
 
 const persistor = persistStore(sessionStore);
 
-setupInactivityReset(sessionStore, DELAY_IN_MILISECONDS.DELAY_FOR_INACTIVITY_RESET);
+setupInactivityReset(sessionStore, DELAY_IN_MILLISECONDS.DELAY_FOR_INACTIVITY_RESET);
 
 export { persistor, sessionStore };
