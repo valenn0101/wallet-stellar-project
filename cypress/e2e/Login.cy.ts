@@ -1,6 +1,6 @@
 describe("SafetyAlert Component", () => {
-  const projectUrl = Cypress.env('LOCALHOST_URL');
-    beforeEach(() => {
+  const projectUrl = Cypress.env('BASE_URL');
+  beforeEach(() => {
       cy.visit(projectUrl);
       cy.get('button:contains("Click here")').click();
       cy.get('button:contains("Continue")').as("continueButton");

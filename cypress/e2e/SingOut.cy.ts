@@ -1,7 +1,7 @@
 import { DELAY_IN_MILLISECONDS } from "@/utils/constants";
 
 describe('Sign Out', () => {
-  const projectUrl = Cypress.env('LOCALHOST_URL');
+  const projectUrl = Cypress.env('BASE_URL');
   beforeEach(() => {
     const currentTime = Date.now();
     cy.clock(currentTime);

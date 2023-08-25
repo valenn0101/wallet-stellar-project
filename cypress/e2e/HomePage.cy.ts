@@ -1,4 +1,4 @@
-const projectUrl = Cypress.env('LOCALHOST_URL');
+const projectUrl = Cypress.env('BASE_URL');
 
 describe("HomePage Component", () => {
     beforeEach(() => {
