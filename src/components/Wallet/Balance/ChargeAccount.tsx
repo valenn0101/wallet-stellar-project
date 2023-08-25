@@ -2,28 +2,29 @@ import React, { useState } from 'react';
 import { Card, Button, Toast} from 'react-bootstrap';
 
 import activeTestAccount from '../../../utils/activeTestAccount';
-import { ALERT_MESSAGES, ERROR_MESSAGES } from '../../../utils/constants';
+import { ALERT_MESSAGES, ERROR_MESSAGES, DELAY_IN_MILLISECONDS } from '../../../utils/constants';
 
 function ChargeAccount({ publicKey }) {
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChargeClick = async () => {
-    try {
-      await activeTestAccount(publicKey);
-      setErrorMessage(ALERT_MESSAGES.chargeSuccess);
-      setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
-    } catch (error) {
-      setErrorMessage(ERROR_MESSAGES.invalidCharge + ': ' + error.message);
-      setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
-    }
-  };
+const handleChargeClick = async () => {
+  try {
+    await activeTestAccount(publicKey);
+    const successMessage = ALERT_MESSAGES.chargeSuccess;
+    showNotification(successMessage);
+  } catch (error) {
+    showNotification(`${ERROR_MESSAGES.invalidCharge}:${error.message}`)
+  }
+};
+
+const showNotification = (message) => {
+  setErrorMessage(message);
+  setShowToast(true);
+  setTimeout(() => {
+    setShowToast(false);
+  }, DELAY_IN_MILLISECONDS.DELAY_FOR_TOAST);
+};
 
   return (
     <Card style={{ width: '18rem' }}>

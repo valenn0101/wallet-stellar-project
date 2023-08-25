@@ -4,6 +4,7 @@ export const ERROR_MESSAGES = {
   invalidStart: "Secret key must start with 'S'.",
   invalidStartPublic: "Public key must start with 'G'.",
   invalidCharge: 'Invalid charge.',
+  notNetwork: 'Network response was not ok.',
 };
 
 export const TOAST_ALERT_MESSAGE = {
@@ -24,5 +25,11 @@ export const CUSTOM_TOAST_STYLE = {
   fontColor: 'white',
   progressBackground: 'white',
 };
+
+export const DELAY_IN_MILLISECONDS = {
+  DELAY_FOR_TOAST: 6000,
+  DELAY_FOR_INACTIVITY_RESET: 180000,
+  DELAY_FOR_INACTIVITY_TESTING: 190000,
+}
 
 export const TESTNET_HORIZON_URL = "https://horizon-testnet.stellar.org";

@@ -1,22 +1,24 @@
-describe('Sign Out', () => {
-    beforeEach(() => {
-      const currentTime = new Date('2023-08-22T00:00:00Z').getTime();
-      cy.clock(currentTime);
-      
-      cy.visit("http://localhost:5173"); 
-      cy.get('button:contains("Click here")').click();
-    });
-    
-    it("Should sign out after 3 minutes", () => {
-      cy.tick(190000);
-      cy.get(".auth-form-title").should("contain", "Sign In");
-    });
+import { DELAY_IN_MILLISECONDS } from "@/utils/constants";
 
-    it("Should sign out when you click the Sign Out button", () => {
-        cy.get('button:contains("Continue")').click();
-        cy.get(".button-wallet").click();
-        cy.get(".sign-out").click();
-        cy.get(".auth-form-title").should("contain", "Sign In");
-    });
+describe('Sign Out', () => {
+  const projectUrl = Cypress.env('BASE_URL');
+  beforeEach(() => {
+    const currentTime = Date.now();
+    cy.clock(currentTime);
+    cy.visit(projectUrl); 
+    cy.get(".auth-form-title").should("contain", "Sign In").as("authFormTitle");
+    cy.get('button:contains("Click here")').click();
   });
-  
+
+  it("Should log out after 3 minutes of inactivity", () => {
+    cy.tick(DELAY_IN_MILLISECONDS.DELAY_FOR_INACTIVITY_TESTING);
+    cy.get("@authFormTitle")
+  });
+
+  it("Should sign out when you click the Sign Out button", () => {
+      cy.get('button:contains("Continue")').click();
+      cy.get(".button-wallet").click();
+      cy.get(".sign-out").click();
+      cy.get("@authFormTitle")
+    });
+});

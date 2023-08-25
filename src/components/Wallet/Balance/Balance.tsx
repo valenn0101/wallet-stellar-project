@@ -7,13 +7,14 @@ import xlmLogo from '../../../assets/xlm-logo.png';
 
 function Balance(publicKey) {
   const accountBalance = useBalance(publicKey);
+  const isStringBalance = typeof accountBalance === 'string';
   return (
     <>
       <Row>
         <Col>
           <h3 className="text-primary">Account balance</h3>
           <div className="d-flex align-items-center">
-            { typeof accountBalance === "string"  ? (
+            { isStringBalance  ? (
               <> 
                 <Alert variant='success' className='balance-info'>{accountBalance}</Alert>
                 <img src={xlmLogo} alt="XLM Logo" width="30" height="30" className="ml-2" style={{
