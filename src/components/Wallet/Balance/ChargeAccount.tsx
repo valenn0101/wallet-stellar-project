@@ -14,8 +14,7 @@ const handleChargeClick = async () => {
     const successMessage = ALERT_MESSAGES.chargeSuccess;
     showNotification(successMessage);
   } catch (error) {
-    const errorMessage = ERROR_MESSAGES.invalidCharge + ': ' + error.message;
-    showNotification(errorMessage);
+    showNotification(`${ERROR_MESSAGES.invalidCharge}:${error.message}`)
   }
 };
 
