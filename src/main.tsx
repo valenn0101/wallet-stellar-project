@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import App from './App';
 import './index.css';
-import  sessionStore  from "./redux/sessionStore";
+import  {sessionStore}  from "./redux/sessionStore";
 import { Buffer } from "buffer";
 
 window.Buffer = window.Buffer || Buffer;

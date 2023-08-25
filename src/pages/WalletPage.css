@@ -1,0 +1,36 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-wallet-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .home-wallet-content {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .home-wallet-content > * + * {
+    margin-top: 20px;
+  }
+  
+  h3.text-primary {
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .btn-block {
+    width: 100%;
+  }
+  
+  .btn-block + .btn-block {
+    margin-top: 10px;
+  }
+  

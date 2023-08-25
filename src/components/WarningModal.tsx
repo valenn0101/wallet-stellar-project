@@ -5,12 +5,13 @@ import Modal from "react-bootstrap/Modal";
 interface WarningModalProps {
   show: boolean;
   onClose: () => void;
+  onContinue: () => void;
   tittleMessage: string;
   message: string;
 }
 
 function WarningModal(props: WarningModalProps): React.ReactElement {
-  const { show, onClose, tittleMessage, message } = props;
+  const { show, onClose, tittleMessage, message, onContinue } = props;
 
   return (
     <Modal
@@ -30,7 +31,7 @@ function WarningModal(props: WarningModalProps): React.ReactElement {
         <Button variant="secondary" className="button" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" className="button" onClick={onClose}>
+        <Button variant="primary" className="button button-wallet" onClick={onContinue}>
           Continue
         </Button>
       </Modal.Footer>

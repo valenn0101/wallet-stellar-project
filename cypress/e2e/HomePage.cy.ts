@@ -1,6 +1,8 @@
+const projectUrl = Cypress.env('BASE_URL');
+
 describe("HomePage Component", () => {
     beforeEach(() => {
-      cy.visit("http://localhost:5173"); 
+      cy.visit(projectUrl); 
     });
     it("Should render CreateKeys and Login components", () => {
       cy.get(".auth-form-title").should("contain", "Sign In");
@@ -13,7 +15,7 @@ describe("HomePage Component", () => {
   });
   describe("Login Component", () => {
     beforeEach(() => {
-      cy.visit("http://localhost:5173"); 
+      cy.visit(projectUrl); 
       cy.get('input[type="text"]').as("inputForKey");
       cy.get('button:contains("Submit")').as("submitButton");
     });
@@ -39,7 +41,7 @@ describe("HomePage Component", () => {
   });
   describe("Generate Keys Component", () => {
     beforeEach(() => {
-      cy.visit("http://localhost:5173"); 
+      cy.visit(projectUrl); 
     });
   
     it("Should generate secret key when you click the button 'Click here'", () => {

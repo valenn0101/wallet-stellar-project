@@ -8,6 +8,7 @@ describe("WarningModal Component", () => {
       onClose: cy.stub(),
       tittleMessage: "Warning!",
       message: "This is a warning message.",
+      onContinue: cy.stub()
     };
 
     cy.mount(<WarningModal {...props} />);
