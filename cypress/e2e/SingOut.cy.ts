@@ -1,5 +1,5 @@
 describe('Sign Out', () => {
-  const projectUrl = "http://localhost:5173";
+  const projectUrl = Cypress.env('LOCALHOST_URL');
   beforeEach(() => {
     const currentTime = Date.now();
     cy.clock(currentTime);

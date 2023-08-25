@@ -1,8 +1,9 @@
-import { defineConfig } from "cypress";
+import { defineConfig } from "cypress";    
 
 export default defineConfig({
   env: {
-    baseUrl: "http://localhost:5173", // Cambia el puerto si es necesario
+    baseUrl: 'http://localhost:5173', // Cambia el puerto si es necesario
+    PROJECT_URL: 'http://localhost:5173',
   },
 
   e2e: {

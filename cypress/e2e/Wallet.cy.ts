@@ -1,5 +1,5 @@
 describe("Login and Account Actions", () => {
-  const projectUrl = "http://localhost:5173";
+  const projectUrl = Cypress.env('LOCALHOST_URL');
   beforeEach(() => {
     cy.visit(projectUrl); 
     cy.get('input[type="text"]').as("inputForKey");
