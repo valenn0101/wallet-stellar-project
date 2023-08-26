@@ -2,7 +2,6 @@ export const ERROR_MESSAGES = {
   invalidKey: 'Invalid secret key.',
   invalidLength: 'Secret key must be 56 characters long.',
   invalidStart: "Secret key must start with 'S'.",
-  invalidStartPublic: "Public key must start with 'G'.",
   invalidCharge: 'Invalid charge.',
   notNetwork: 'Network response was not ok.',
 };
@@ -10,7 +9,6 @@ export const ERROR_MESSAGES = {
 export const TOAST_ALERT_MESSAGE = {
   signOut: 'Session successfully logged out',
   notFoundAccount: 'Account not found',
-  notAmount: 'Please enter a valid amount.',
 };
 
 export const ALERT_MESSAGES = {
