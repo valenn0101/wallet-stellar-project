@@ -2,8 +2,10 @@ export const ERROR_MESSAGES = {
   invalidKey: 'Invalid secret key.',
   invalidLength: 'Secret key must be 56 characters long.',
   invalidStart: "Secret key must start with 'S'.",
+  invalidPublicKey: 'Public key must start with "G".',
   invalidCharge: 'Invalid charge.',
   notNetwork: 'Network response was not ok.',
+  invalidAmount: 'Please enter a valid amount (more than 0).',
 };
 
 export const TOAST_ALERT_MESSAGE = {
@@ -29,5 +31,7 @@ export const DELAY_IN_MILLISECONDS = {
   DELAY_FOR_INACTIVITY_RESET: 180000,
   DELAY_FOR_INACTIVITY_TESTING: 190000,
 }
+
+export const REQUIRED_KEYS_LENGTH = 56;
 
 export const TESTNET_HORIZON_URL = "https://horizon-testnet.stellar.org";
