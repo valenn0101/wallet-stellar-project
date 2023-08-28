@@ -5,7 +5,8 @@ export const ERROR_MESSAGES = {
   invalidPublicKey: 'Public key must start with "G".',
   invalidCharge: 'Invalid charge.',
   notNetwork: 'Network response was not ok.',
-  invalidAmount: 'Please enter a valid amount (more than 0).',
+  invalidAmount: 'Please enter a valid amount (more than 0.5).',
+  invalidAccount: 'Account not found. Please check the key.',
 };
 
 export const TOAST_ALERT_MESSAGE = {
