@@ -34,7 +34,7 @@ const streamAccount = (publicKey: string, balanceCallback: BalanceCallback) => {
         }
       },
       onerror: (error) => {
-        balanceCallback(ERROR_MESSAGES.invalidAccount + error.message);
+        balanceCallback(ERROR_MESSAGES.invalidAccount + error);
       }
     });
   }
