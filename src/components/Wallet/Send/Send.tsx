@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
-import { ERROR_MESSAGES, REQUIRED_KEYS_LENGTH } from '../../../utils/constants';
+import { ERROR_MESSAGES, MINIUM_BALANCE_REQUIRED, REQUIRED_KEYS_LENGTH } from '../../../utils/constants';
+import streamAccount from '../../../utils/streamAccounBalance';
 
 function Send() {
   const [amount, setAmount] = useState('');
   const [accountReceiver, setAccountReceiver] = useState('');
+  const [receiverBalance, setReceiverBalance] = useState(0);
   const [errors, setErrors] = useState({});
 
   const validateAmount = (value) => {
@@ -17,17 +19,35 @@ function Send() {
     }
     setErrors(newErrors);
   };
-
-  const validateAccountReceiver = (value) => {
+  const validateAccountReceiver = async (value) => {
     const newErrors = { ...errors };
 
-    if(value.length !== REQUIRED_KEYS_LENGTH || !value.startsWith('G')) {
-      newErrors.accountReceiver = value.length !== REQUIRED_KEYS_LENGTH ? ERROR_MESSAGES.invalidLength : ERROR_MESSAGES.invalidPublicKey;
+    if (value.length !== REQUIRED_KEYS_LENGTH || !value.startsWith('G')) {
+      newErrors.accountReceiver =
+        value.length !== REQUIRED_KEYS_LENGTH ? ERROR_MESSAGES.invalidLength : ERROR_MESSAGES.invalidPublicKey;
     } else {
       delete newErrors.accountReceiver;
     }
 
-    setErrors(newErrors);
+    const accountStream = streamAccount(value, (balance) => {
+      if (typeof balance !== 'number') {
+        setReceiverBalance(null);
+        newErrors.accountReceiver = balance;
+        setErrors(newErrors);
+        return;
+      }
+    
+      if (balance > MINIUM_BALANCE_REQUIRED) {
+        delete newErrors.accountReceiver;
+        setReceiverBalance(balance);
+      } else if (balance < MINIUM_BALANCE_REQUIRED) {
+        newErrors.accountReceiver = ERROR_MESSAGES.invalidAmount;
+      }
+    });
+    
+
+  setErrors(newErrors);
+
   };
 
   const handleAmountChange = (e) => {
@@ -82,6 +102,11 @@ function Send() {
               required
             />
             {errors.accountReceiver && <Form.Text className="text-danger">{errors.accountReceiver}</Form.Text>}
+            {receiverBalance > 0 && (
+              <Form.Text className="text-success">
+                Account is ok!
+              </Form.Text>
+            )}
           </Form.Group>
 
           <Button variant="success" className="btn-block mt-3" type="submit">

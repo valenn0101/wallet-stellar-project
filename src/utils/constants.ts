@@ -35,4 +35,6 @@ export const DELAY_IN_MILLISECONDS = {
 
 export const REQUIRED_KEYS_LENGTH = 56;
 
+export const MINIUM_BALANCE_REQUIRED = 0.5;
+
 export const TESTNET_HORIZON_URL = "https://horizon-testnet.stellar.org";
