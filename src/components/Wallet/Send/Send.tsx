@@ -14,26 +14,26 @@ function Send() {
   const [receiverBalance, setReceiverBalance] = useState(0);
   const [errors, setErrors] = useState({});
 
-  const validateAmount = (value) => {
+  const validateAmount = (amount) => {
     const newErrors = { ...errors };
-    if (!value || isNaN(value) || parseFloat(value) <= 0) {
+    if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
       newErrors.amount = ERROR_MESSAGES.invalidAmount;
     } else {
       delete newErrors.amount;
     }
     setErrors(newErrors);
   };
-  const validateAccountReceiver = async (value) => {
+  const validateAccountReceiver = async (keyReceiver) => {
     const newErrors = { ...errors };
 
-    if (value.length !== REQUIRED_KEYS_LENGTH || !value.startsWith('G')) {
+    if (keyReceiver.length !== REQUIRED_KEYS_LENGTH || !keyReceiver.startsWith('G')) {
       newErrors.accountReceiver =
-        value.length !== REQUIRED_KEYS_LENGTH ? ERROR_MESSAGES.invalidLength : ERROR_MESSAGES.invalidPublicKey;
+        keyReceiver.length !== REQUIRED_KEYS_LENGTH ? ERROR_MESSAGES.invalidLength : ERROR_MESSAGES.invalidPublicKey;
     } else {
       delete newErrors.accountReceiver;
     }
 
-    const accountStream = streamAccount(value, (balance) => {
+    const accountStream = streamAccount(keyReceiver, (balance) => {
       if (typeof balance !== 'number') {
         setReceiverBalance(null);
         newErrors.accountReceiver = balance;
@@ -77,15 +77,15 @@ function Send() {
   };
 
   const handleAmountChange = (e) => {
-    const newValue = e.target.value;
-    setAmount(newValue);
-    validateAmount(newValue);
+    const newAmount = e.target.value;
+    setAmount(newAmount);
+    validateAmount(newAmount);
   };
 
   const handleAccountReceiverChange = (e) => {
-    const newValue = e.target.value;
-    setAccountReceiver(newValue);
-    validateAccountReceiver(newValue);
+    const newKey = e.target.value;
+    setAccountReceiver(newKey);
+    validateAccountReceiver(newKey);
   };
 
   const handleAccountSenderChange = (e) => {
