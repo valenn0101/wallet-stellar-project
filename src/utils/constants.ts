@@ -7,6 +7,7 @@ export const ERROR_MESSAGES = {
   notNetwork: 'Network response was not ok.',
   invalidAmount: 'Please enter a valid amount (more than 0.5).',
   invalidAccount: 'Account not found. Please check the key.',
+  notAccount: `This isn't your secret key.`
 };
 
 export const TOAST_ALERT_MESSAGE = {

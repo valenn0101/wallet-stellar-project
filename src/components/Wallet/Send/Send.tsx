@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 import { ERROR_MESSAGES, MINIUM_BALANCE_REQUIRED, REQUIRED_KEYS_LENGTH } from '../../../utils/constants';
 import streamAccount from '../../../utils/streamAccounBalance';
+import getPublicKey from '../../../utils/getPublicKey';
 
 function Send() {
+  const publicKey = useSelector((state) => state.publicKey);
   const [amount, setAmount] = useState('');
   const [accountReceiver, setAccountReceiver] = useState('');
+  const [accountSender, setAccountSender] = useState('');
   const [receiverBalance, setReceiverBalance] = useState(0);
   const [errors, setErrors] = useState({});
 
@@ -36,18 +40,40 @@ function Send() {
         setErrors(newErrors);
         return;
       }
-    
-      if (balance > MINIUM_BALANCE_REQUIRED) {
+
+      if (balance >= MINIUM_BALANCE_REQUIRED) {
         delete newErrors.accountReceiver;
         setReceiverBalance(balance);
       } else if (balance < MINIUM_BALANCE_REQUIRED) {
         newErrors.accountReceiver = ERROR_MESSAGES.invalidAmount;
       }
     });
-    
 
-  setErrors(newErrors);
+    setErrors(newErrors);
+  };
+  const validateAccountSender = async (secretKey) => {
+    const newErrors = { ...errors };
 
+    if (secretKey.length !== REQUIRED_KEYS_LENGTH || !secretKey.startsWith('S')) {
+      newErrors.accountSender =
+        secretKey.length !== REQUIRED_KEYS_LENGTH ? ERROR_MESSAGES.invalidLength : ERROR_MESSAGES.invalidStart;
+    } else {
+      delete newErrors.accountSender;
+    }
+
+    const yourAccount = await getPublicKey(secretKey);
+
+    if (typeof yourAccount === 'string') {
+      if (yourAccount !== publicKey) {
+        newErrors.accountSender = ERROR_MESSAGES.notAccount;
+      } else {
+        delete newErrors.accountSender;
+      }
+    } else {
+      newErrors.accountSender = yourAccount.message + ': ' + ERROR_MESSAGES.invalidAccount;
+    }
+
+    setErrors(newErrors);
   };
 
   const handleAmountChange = (e) => {
@@ -60,6 +86,12 @@ function Send() {
     const newValue = e.target.value;
     setAccountReceiver(newValue);
     validateAccountReceiver(newValue);
+  };
+
+  const handleAccountSenderChange = (e) => {
+    const newSecretKey = e.target.value;
+    setAccountSender(newSecretKey);
+    validateAccountSender(newSecretKey);
   };
 
   const handleSubmit = (e) => {
@@ -102,14 +134,22 @@ function Send() {
               required
             />
             {errors.accountReceiver && <Form.Text className="text-danger">{errors.accountReceiver}</Form.Text>}
-            {receiverBalance > 0 && (
-              <Form.Text className="text-success">
-                Account is ok!
-              </Form.Text>
-            )}
+            {receiverBalance > 0 && <Form.Text className="text-success">Account is ok!</Form.Text>}
           </Form.Group>
-
-          <Button variant="success" className="btn-block mt-3" type="submit">
+          {receiverBalance >= MINIUM_BALANCE_REQUIRED && (
+            <Form.Group controlId="accountSender">
+              <Form.Label>Your Secret Key</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your secret key"
+                value={accountSender}
+                onChange={handleAccountSenderChange}
+                required
+              />
+              {errors.accountSender && <Form.Text className="text-danger">{errors.accountSender}</Form.Text>}
+            </Form.Group>
+          )}
+          <Button variant="success" className="btn-block mt-3" type="submit" disabled={Object.keys(errors).length > 0}>
             Send
           </Button>
         </Form>
