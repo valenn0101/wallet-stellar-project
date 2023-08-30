@@ -13,6 +13,8 @@ export const ERROR_MESSAGES = {
 export const TOAST_ALERT_MESSAGE = {
   signOut: 'Session successfully logged out',
   notFoundAccount: 'Account not found',
+  errorSending: 'Error sending money',
+  successSending: 'Money sent successfully',
 };
 
 export const ALERT_MESSAGES = {
@@ -24,6 +26,7 @@ export const ALERT_MESSAGES = {
 
 export const CUSTOM_TOAST_STYLE = {
   alertBackground: 'red',
+  successBackground: 'green',
   fontColor: 'white',
   progressBackground: 'white',
 };

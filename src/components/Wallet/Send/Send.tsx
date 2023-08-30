@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import WarningModal from '../../WarningModal';
 import {
   ERROR_MESSAGES,
   MINIUM_BALANCE_REQUIRED,
   REQUIRED_KEYS_LENGTH,
+  CUSTOM_TOAST_STYLE,
   ALERT_MESSAGES,
+  TOAST_ALERT_MESSAGE,
 } from '../../../utils/constants';
 import streamAccount from '../../../utils/streamAccounBalance';
 import getPublicKey from '../../../utils/getPublicKey';
@@ -120,12 +124,28 @@ function Send({ balance }) {
       try {
         setLoading(true);
         await Transaction(accountSender, accountReceiver, amount);
-        console.log('Sending money...');
       } catch (error) {
-        console.error('Error sending money:', error);
+        toast.info(TOAST_ALERT_MESSAGE.errorSending + error.message,{
+          style: {
+            background: CUSTOM_TOAST_STYLE.alertBackground,
+            color: CUSTOM_TOAST_STYLE.fontColor,
+          },
+          progressStyle: {
+            background: CUSTOM_TOAST_STYLE.progressBackground,
+          }
+        })
       } finally {
         setLoading(false);
         setShowModal(false);
+        toast.info(TOAST_ALERT_MESSAGE.successSending,{
+          style: {
+            background: CUSTOM_TOAST_STYLE.successBackground,
+            color: CUSTOM_TOAST_STYLE.fontColor,
+          },
+          progressStyle: {
+            background: CUSTOM_TOAST_STYLE.progressBackground,
+          }
+        })
       }
     }
   };
@@ -203,6 +223,7 @@ function Send({ balance }) {
         onContinue={handleContinue}
         type="submit"
       />
+      <ToastContainer />
     </>
   );
 }
