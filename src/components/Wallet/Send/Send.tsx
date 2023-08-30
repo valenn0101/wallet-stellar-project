@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
-import { ERROR_MESSAGES, MINIUM_BALANCE_REQUIRED, REQUIRED_KEYS_LENGTH } from '../../../utils/constants';
+import WarningModal from '../../WarningModal';
+import {
+  ERROR_MESSAGES,
+  MINIUM_BALANCE_REQUIRED,
+  REQUIRED_KEYS_LENGTH,
+  ALERT_MESSAGES,
+} from '../../../utils/constants';
 import streamAccount from '../../../utils/streamAccounBalance';
 import getPublicKey from '../../../utils/getPublicKey';
 import Transaction from './Transaction';
 
-function Send({balance}) {
+function Send({ balance }) {
   const publicKey = useSelector((state) => state.publicKey);
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState('');
   const [accountReceiver, setAccountReceiver] = useState('');
-  const [accountSender, setAccountSender] = useState('');
+  const [accountSender, setAccountSender] = useState(null);
   const [receiverBalance, setReceiverBalance] = useState(0);
   const [errors, setErrors] = useState({});
 
@@ -79,6 +87,14 @@ function Send({balance}) {
     setErrors(newErrors);
   };
 
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   const handleAmountChange = (e) => {
     const newAmount = e.target.value;
     setAmount(newAmount);
@@ -97,67 +113,97 @@ function Send({balance}) {
     validateAccountSender(newSecretKey);
   };
 
-  const handleSubmit =  (e) => {
-    e.preventDefault();
 
+  const handleContinue = async (e) => {
+    e.preventDefault();
     if (Object.keys(errors).length === 0) {
-      console.log('Sending money...');
+      try {
+        setLoading(true);
+        await Transaction(accountSender, accountReceiver, amount);
+        console.log('Sending money...');
+      } catch (error) {
+        console.error('Error sending money:', error);
+      } finally {
+        setLoading(false);
+        setShowModal(false);
+      }
     }
   };
 
   return (
-    <Row className="justify-content-center">
-      <Col md={6}>
-        <h3 className="text-primary">Send Your Money</h3>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="amount">
-            <Form.Label>Amount</Form.Label>
-            <div className="input-group">
-              <Form.Control
-                type="number"
-                placeholder="Enter amount"
-                value={amount}
-                onChange={handleAmountChange}
-                required
-              />
-              <div className="input-group-append">
-                <span className="input-group-text">XLM</span>
+    <>
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <h3 className="text-primary">Send Your Money</h3>
+          <Form>
+            <Form.Group controlId="amount">
+              <Form.Label>Amount</Form.Label>
+              <div className="input-group">
+                <Form.Control
+                  type="number"
+                  placeholder="Enter amount"
+                  value={amount}
+                  onChange={handleAmountChange}
+                  required
+                />
+                <div className="input-group-append">
+                  <span className="input-group-text">XLM</span>
+                </div>
               </div>
-            </div>
-            {errors.amount && <Form.Text className="text-danger">{errors.amount}</Form.Text>}
-          </Form.Group>
+              {errors.amount && <Form.Text className="text-danger">{errors.amount}</Form.Text>}
+            </Form.Group>
 
-          <Form.Group controlId="accountReceiver">
-            <Form.Label>Account Receiver</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter account receiver"
-              value={accountReceiver}
-              onChange={handleAccountReceiverChange}
-              required
-            />
-            {errors.accountReceiver && <Form.Text className="text-danger">{errors.accountReceiver}</Form.Text>}
-            {receiverBalance > 0 && <Form.Text className="text-success">Account is ok!</Form.Text>}
-          </Form.Group>
-          {receiverBalance >= MINIUM_BALANCE_REQUIRED && (
-            <Form.Group controlId="accountSender">
-              <Form.Label>Your Secret Key</Form.Label>
+            <Form.Group controlId="accountReceiver">
+              <Form.Label>Account Receiver</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter your secret key"
-                value={accountSender}
-                onChange={handleAccountSenderChange}
+                placeholder="Enter account receiver"
+                value={accountReceiver}
+                onChange={handleAccountReceiverChange}
                 required
               />
-              {errors.accountSender && <Form.Text className="text-danger">{errors.accountSender}</Form.Text>}
+              {errors.accountReceiver && <Form.Text className="text-danger">{errors.accountReceiver}</Form.Text>}
+              {receiverBalance > 0 && <Form.Text className="text-success">Account is ok!</Form.Text>}
             </Form.Group>
-          )}
-          <Button variant="success" className="btn-block mt-3" type="submit" disabled={Object.keys(errors).length > 0}>
-            Send
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+            {receiverBalance >= MINIUM_BALANCE_REQUIRED && (
+              <Form.Group controlId="accountSender">
+                <Form.Label>Your Secret Key</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your secret key"
+                  value={accountSender}
+                  onChange={handleAccountSenderChange}
+                  required
+                />
+                {errors.accountSender && <Form.Text className="text-danger">{errors.accountSender}</Form.Text>}
+              </Form.Group>
+            )}
+            <Button
+              onClick={openModal}
+              variant="success"
+              className="btn-block mt-3"
+              disabled={Object.keys(errors).length > 0 || !accountSender}
+            >
+              Send
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+      <WarningModal
+        show={showModal}
+        tittleMessage={ALERT_MESSAGES.alert}
+        message={
+          loading ? (
+            <Spinner animation="border" size="sm" variant="info" />
+          ) : (
+            `${amount}$ is about to be subtracted from your account`
+          )
+        }
+        onClose={closeModal}
+        onContinue={handleContinue}
+        type="submit"
+      />
+    </>
   );
 }
 
