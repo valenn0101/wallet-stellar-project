@@ -170,7 +170,7 @@ function Send({ balance }) {
                   <span className="input-group-text">XLM</span>
                 </div>
               </div>
-              {errors.amount && <Form.Text className="text-danger">{errors.amount}</Form.Text>}
+              {errors.amount && <Form.Text className="text-danger amount-error">{errors.amount}</Form.Text>}
             </Form.Group>
 
             <Form.Group controlId="accountReceiver">
@@ -182,8 +182,8 @@ function Send({ balance }) {
                 onChange={handleAccountReceiverChange}
                 required
               />
-              {errors.accountReceiver && <Form.Text className="text-danger">{errors.accountReceiver}</Form.Text>}
-              {receiverBalance > 0 && <Form.Text className="text-success">Account is ok!</Form.Text>}
+              {errors.accountReceiver && <Form.Text className="text-danger receiver-error">{errors.accountReceiver}</Form.Text>}
+              {receiverBalance > 0 && <Form.Text className="text-success receiver-success">{ALERT_MESSAGES.accountPass}</Form.Text>}
             </Form.Group>
             {receiverBalance >= MINIUM_BALANCE_REQUIRED && (
               <Form.Group controlId="accountSender">
@@ -195,7 +195,7 @@ function Send({ balance }) {
                   onChange={handleAccountSenderChange}
                   required
                 />
-                {errors.accountSender && <Form.Text className="text-danger">{errors.accountSender}</Form.Text>}
+                {errors.accountSender && <Form.Text className="text-danger sender-error">{errors.accountSender}</Form.Text>}
               </Form.Group>
             )}
             <Button
@@ -214,7 +214,7 @@ function Send({ balance }) {
         tittleMessage={ALERT_MESSAGES.alert}
         message={
           loading ? (
-            <Spinner animation="border" size="sm" variant="info" />
+            <Spinner animation="border" size="sm" variant="info" className='loading-spinner'/>
           ) : (
             `${amount}$ is about to be subtracted from your account`
           )

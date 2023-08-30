@@ -22,6 +22,7 @@ export const ALERT_MESSAGES = {
   copyYourKeys: 'Please copy your keys!',
   notSession: 'Please sign in to continue',
   chargeSuccess: 'Account charged successfully!',
+  accountPass: 'Account is ok!',
 };
 
 export const CUSTOM_TOAST_STYLE = {
