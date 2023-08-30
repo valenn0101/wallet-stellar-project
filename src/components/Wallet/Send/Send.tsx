@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import { ERROR_MESSAGES, MINIUM_BALANCE_REQUIRED, REQUIRED_KEYS_LENGTH } from '../../../utils/constants';
 import streamAccount from '../../../utils/streamAccounBalance';
 import getPublicKey from '../../../utils/getPublicKey';
+import Transaction from './Transaction';
 
-function Send() {
+function Send({balance}) {
   const publicKey = useSelector((state) => state.publicKey);
   const [amount, setAmount] = useState('');
   const [accountReceiver, setAccountReceiver] = useState('');
@@ -14,9 +15,11 @@ function Send() {
   const [receiverBalance, setReceiverBalance] = useState(0);
   const [errors, setErrors] = useState({});
 
+  const maxAmount = Number(balance);
+
   const validateAmount = (amount) => {
     const newErrors = { ...errors };
-    if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+    if (!amount || isNaN(amount) || parseFloat(amount) <= 0 || parseFloat(amount) > maxAmount) {
       newErrors.amount = ERROR_MESSAGES.invalidAmount;
     } else {
       delete newErrors.amount;
@@ -94,7 +97,7 @@ function Send() {
     validateAccountSender(newSecretKey);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
 
     if (Object.keys(errors).length === 0) {
