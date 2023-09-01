@@ -21,12 +21,12 @@ describe("Login and Account Actions", () => {
         cy.get('button:contains("Send")').as("sendButton");
     });
 
-    it("should log in and show the transaction inputs", () => {
+    it("Should log in and show the transaction inputs", () => {
         cy.get('@amountInput').should("be.visible");
         cy.get('@receiverInput').should("be.visible");
     });
 
-    it("should show error messages for invalid values", () => {
+    it("Should show error messages for invalid values", () => {
         cy.get('@amountInput').clear().type(invalidAmount);
         cy.get('.amount-error').should("be.visible").should("have.text", ERROR_MESSAGES.invalidAmount);
 
@@ -34,20 +34,20 @@ describe("Login and Account Actions", () => {
         cy.get('.receiver-error').should("be.visible");
     });
 
-    it("should display sender input and success message for valid values", () => {
+    it("Should display sender input and success message for valid values", () => {
         cy.get('@amountInput').clear().type(validAmount);
         cy.get('@receiverInput').clear().type(validReceiverKey);
         cy.get('.receiver-success').should("have.text", ALERT_MESSAGES.accountPass);
         cy.get('@secretKeyInput').should("be.visible");
     });
 
-    it('should show ModalWarning when "Send" button is clicked', () => {
+    it('Should show ModalWarning when "Send" button is clicked', () => {
         cy.get('@secretKeyInput').clear().type(validSenderKey);
         cy.get('@sendButton').click();
         cy.get(".modal-warning").should("be.visible");
     });
 
-    it('should show Loading Spinner and Toastify Alert after completing steps', () => {
+    it('Should show Loading Spinner and Toastify Alert after completing steps', () => {
         cy.get('@secretKeyInput').clear().type(validSenderKey);
         cy.get('@sendButton').click();
         cy.get(".modal-warning").should("be.visible");
