@@ -1,5 +1,6 @@
 import React from 'react';
-import { Server, Keypair, TransactionBuilder, BASE_FEE, Networks, Operation, Asset } from "stellar-sdk";
+import { Keypair, TransactionBuilder, BASE_FEE, Networks, Operation, Asset } from "stellar-sdk";
+import stellarServer from '../../../utils/stellarServer';
 
 type TransactionResult = {
     success: boolean;
@@ -7,14 +8,12 @@ type TransactionResult = {
     error?: string;
 };
 
-const TESTNET_HORIZON: string = import.meta.env.VITE_TESTNET_HORIZON_URL;
-const server: Server = new Server(TESTNET_HORIZON);
 
 async function Transaction(secret: string, destination: string, amount: string): Promise<TransactionResult> {
     try {
         const sourceKeys: Keypair = Keypair.fromSecret(secret);
-        await server.loadAccount(destination);
-        const sourceAccount = await server.loadAccount(sourceKeys.publicKey());
+        await stellarServer.loadAccount(destination);
+        const sourceAccount = await stellarServer.loadAccount(sourceKeys.publicKey());
     
         const transaction = new TransactionBuilder(sourceAccount, {
           fee: BASE_FEE,
@@ -31,7 +30,7 @@ async function Transaction(secret: string, destination: string, amount: string):
           .build();
     
         transaction.sign(sourceKeys);
-        const result = await server.submitTransaction(transaction);
+        const result = await stellarServer.submitTransaction(transaction);
 
         return { success: true, result };
     } catch (err) {
