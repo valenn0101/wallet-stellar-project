@@ -12,7 +12,7 @@ const streamAccount = (publicKey: string, balanceCallback: BalanceCallback) => {
   if (publicKey !== currentPublicKey) {
     currentPublicKey = publicKey;
     if (accountStream) {
-      accountStream(); // Close the previous stream
+      accountStream();
       accountStream = null;
     }
   }
