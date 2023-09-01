@@ -7,11 +7,12 @@ interface WarningModalProps {
   onClose: () => void;
   onContinue: () => void;
   tittleMessage: string;
-  message: string;
+  message: string | React.ReactElement;
+  type?: any;
 }
 
 function WarningModal(props: WarningModalProps): React.ReactElement {
-  const { show, onClose, tittleMessage, message, onContinue } = props;
+  const { show, onClose, tittleMessage, message, onContinue, type } = props;
 
   return (
     <Modal
@@ -31,7 +32,7 @@ function WarningModal(props: WarningModalProps): React.ReactElement {
         <Button variant="secondary" className="button" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" className="button button-wallet" onClick={onContinue}>
+        <Button variant="primary" className="button button-wallet" onClick={onContinue} type={type}>
           Continue
         </Button>
       </Modal.Footer>

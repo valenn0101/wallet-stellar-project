@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
 
 import useBalance from '../../../hooks/useBalance';
 import ChargeAccount from './ChargeAccount';
 import xlmLogo from '../../../assets/xlm-logo.png';
 
-function Balance(publicKey) {
-  const accountBalance = useBalance(publicKey);
+function Balance( {publicKey, setBalance} ) {
+  const accountBalance = useBalance({publicKey});
   const isStringBalance = typeof accountBalance === 'string';
+
+  useEffect(() => {
+    if (isStringBalance) {
+      setBalance(accountBalance);
+    }else{
+      setBalance(0);
+    }
+  }, [accountBalance, isStringBalance]);
   return (
     <>
       <Row>
@@ -22,7 +30,7 @@ function Balance(publicKey) {
                 }} />
               </>
             ) : (
-              <ChargeAccount publicKey={publicKey}/>
+              <ChargeAccount publicKey={{publicKey}}/>
             )}
           </div>
         </Col>

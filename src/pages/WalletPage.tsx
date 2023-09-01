@@ -1,14 +1,16 @@
 import "./WalletPage.css";
-import React from "react";
+import React, { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 import Balance from "../components/Wallet/Balance/Balance";
+import Send from "../components/Wallet/Send/Send";
 
 
 function HomeWallet(): React.ReactElement {
+  const [balance, setBalance] = useState(0);
   const publicKey = useSelector((state) => state.publicKey);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,24 +31,9 @@ function HomeWallet(): React.ReactElement {
           </Col>
         </Row>
         <hr />
-          <Balance publicKey={publicKey} />
+          <Balance publicKey={publicKey} setBalance={setBalance} />
         <hr />
-        <Row>
-          <Col>
-            <h3 className="text-primary">Send your money</h3>
-            <Form>
-              <div className="input-group">
-                <Form.Control type="number" placeholder="Enter amount" />
-                <div className="input-group-append">
-                  <span className="input-group-text">XLM</span>
-                </div>
-              </div>
-              <Button variant="success" className="btn-block mt-3">
-                Send
-              </Button>
-            </Form>
-          </Col>
-        </Row>
+          <Send balance={balance} />
         <hr />
         <Row>
           <Col>

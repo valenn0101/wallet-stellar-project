@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Server } from 'stellar-sdk';
+import stellarServer from '../utils/stellarServer';
 
 type BalanceResult = string | Error;
 
-const TESTNET_HORIZON = import.meta.env.VITE_TESTNET_HORIZON_URL;
 
 const useBalance = ({ publicKey }): BalanceResult => {
   const [balance, setBalance] = useState<BalanceResult>(undefined);
 
-  const server = new Server(TESTNET_HORIZON);
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const account = await server.loadAccount(publicKey);
+        const account = await stellarServer.loadAccount(publicKey);
         const accountBalance = account.balances[0]?.balance;
         setBalance(accountBalance);
       } catch (error) {
@@ -21,7 +19,7 @@ const useBalance = ({ publicKey }): BalanceResult => {
       }
     };
 
-    const accountStream = server.accounts().accountId(publicKey).stream({
+    const accountStream = stellarServer.accounts().accountId(publicKey).stream({
       onmessage: account => {
         const accountBalance = account.balances[0]?.balance;
         setBalance(accountBalance);
