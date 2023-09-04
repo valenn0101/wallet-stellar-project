@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import WarningModal from '../WarningModal';
 import { ALERT_MESSAGES } from '../../utils/constants';
@@ -12,10 +12,9 @@ type Keypair = {
   setSecret: (secret: string | null) => void;
   setPublicKey: (publicKey: string | null) => void;
 };
-function SafetyAlert({ secretKey, setSecret, setPublicKey }: Keypair): React.ReactElement {
+function SafetyAlert({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): React.ReactElement {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const publicKey = useSelector(state => state.publicKey);
   const navigate = useNavigate();
 
   const openModal = () => {
@@ -28,11 +27,14 @@ function SafetyAlert({ secretKey, setSecret, setPublicKey }: Keypair): React.Rea
   const backHome = () => {
     setSecret(null);
     setPublicKey(null);
-    dispatch({
-      type: "SIGN_OUT",
-    });
   };
   const handleContinue = () => {
+    dispatch({
+      type: "SIGN_IN",
+      payload: {
+        publicKey,
+      },
+    });
     navigate('/wallet');
   }
   return (
