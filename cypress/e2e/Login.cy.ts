@@ -30,8 +30,9 @@ describe("SafetyAlert Component", () => {
       cy.get(".safety-alert-title").should("not.exist");
     });
   
-    it("Should show a Toastify Alert when you click the button 'Back Home", () => {
-      cy.get("@backButton").click();
+    it("Should show a Toastify Success when you sign in", () => {
+      cy.get("@continueButton").click();
+      cy.get(".button").contains("Continue").click();
       cy.get(".Toastify__toast-container").should("be.visible");
     });
   });
