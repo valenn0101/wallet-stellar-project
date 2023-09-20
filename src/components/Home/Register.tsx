@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Keypair } from 'stellar-sdk';
-import { useDispatch } from "react-redux";
 import setKeypair from '../../utils/setKeyPair';
 
 interface RegisterProps {
@@ -10,20 +9,12 @@ interface RegisterProps {
 }
 
 function Register({ setSecret, setPublicKey }: RegisterProps): React.ReactElement {
-  const dispatch = useDispatch();
   const handleCreateAccount = () => {
     const pair = Keypair.random();
     setKeypair({
       setSecret,
       setPublicKey,
       pair,
-    });
-    const publicKey = pair.publicKey();
-    dispatch({
-      type: "SIGN_IN",
-      payload: {
-        publicKey,
-      },
     });
   };
 

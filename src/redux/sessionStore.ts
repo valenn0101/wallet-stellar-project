@@ -16,6 +16,15 @@ const initialState = {
 const rootReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case "SIGN_IN":
+      toast.success(TOAST_ALERT_MESSAGE.signIn, {
+        style: {
+            background: CUSTOM_TOAST_STYLE.successBackground,
+            color: CUSTOM_TOAST_STYLE.fontColor,
+        },
+        progressStyle: {
+            background: CUSTOM_TOAST_STYLE.progressBackground,
+        },
+      })
       return {
         ...state,
         publicKey: action.payload.publicKey,

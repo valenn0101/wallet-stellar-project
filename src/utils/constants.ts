@@ -12,6 +12,7 @@ export const ERROR_MESSAGES = {
 
 export const TOAST_ALERT_MESSAGE = {
   signOut: 'Session successfully logged out',
+  signIn: 'Session successfully logged in',
   notFoundAccount: 'Account not found',
   errorSending: 'Error sending money',
   successSending: 'Money sent successfully',

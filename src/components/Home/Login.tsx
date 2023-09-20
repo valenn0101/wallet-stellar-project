@@ -1,6 +1,8 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { Button, Toast } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+
 
 import { ERROR_MESSAGES, TOAST_ALERT_MESSAGE } from '../../utils/constants';
 import  getPublicKey  from '../../utils/getPublicKey';
@@ -16,6 +18,7 @@ function Login({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): Reac
   const [importSecretKey, setImportSecretKey] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,6 +47,7 @@ function Login({ secretKey, publicKey, setSecret, setPublicKey }: Keypair): Reac
             publicKey: publicKeyResult,
           },
         })
+        navigate('/wallet');
       } else {
         const errorMessage =
           publicKeyResult.message + ": " + TOAST_ALERT_MESSAGE.notFoundAccount;
